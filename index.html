@@ -1,0 +1,1062 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en" id="app">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Nutrition</title>
+
+  <!-- CSS -->
+  <!-- Bootstrap -->
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+  <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="html5shiv.min.js"></script>
+  <script src="respond.min.js"></script>
+  <![endif]-->
+  <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+  <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+</head>
+
+<body style="padding-top: 70px; ">
+
+  <!-- navigation bar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand"><i class="glyphicon glyphicon-grain"></i> Nutrition</a>
+    </div>
+  </nav>
+
+  <!-- main body of our application -->
+  <div class="container">
+    <validator name="validation1">
+
+      <!-- Data -->
+      <div class="col-xs-12 col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3>Data</h3>
+          </div>
+          <div class="panel-body">
+            <!-- Weight -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.weight.required || $validation1.weight.min }">
+              <label>Weight (kg)</label>
+              <input type="number" min="0" class="form-control" placeholder="Weight (kg)" v-model="weight" v-validate:weight="{ required: true, min: 0.01 }">
+              <p v-if="$validation1.weight.required">Required data</p>
+              <p v-if="$validation1.weight.min && ! $validation1.weight.required">Out of range</p>
+            </div>
+            <!--endof: Weight -->
+
+            <!-- Height -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.height.required || $validation1.height.min }">
+              <label>Height (m)</label>
+              <input type="number" min="0" class="form-control" placeholder="Height (m)" v-model="height" v-validate:height="{ required: true, min: 0.01 }"
+                step="0.05">
+              <p v-if="$validation1.height.required">Required data</p>
+              <p v-if="$validation1.height.min && ! $validation1.height.required">Out of range</p>
+            </div>
+            <!--endof: Height -->
+
+            <!-- obesity_factor -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.obesity_factor.min || $validation1.obesity_factor.max }">
+              <label>Obesity Factor <small>(15% - 25%)</small></label>
+              <input type="number" class="form-control" placeholder="obesity_factor (15% - 25%)" v-model="obesity_factor" v-validate:obesity_factor="{ min: 15, max: 25 }">
+              <p v-if="$validation1.obesity_factor.min || $validation1.obesity_factor.max">Out of range</p>
+            </div>
+            <!--endof: obesity_factor -->
+
+            <!-- healthy_diet -->
+            <h3 class="bg-primary" style="padding: 10px;">Healthy Diet</h3>
+            <!-- validation alert: healthy_diet_total -->
+            <div class="alert alert-danger" role="alert" v-show="healthy_diet_total !== 100">
+              <strong>Total</strong> should be 100, not <strong>{{healthy_diet_total }}</strong>
+            </div>
+            <!--endof: validation alert: healthy_diet_total -->
+            <!-- CHO -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.cho_percentage.min || $validation1.cho_percentage.max }">
+              <label>CHO <small>(45% - 65%)</small></label>
+              <input type="number" class="form-control" placeholder="CHO (45% - 65%)" v-model="cho_percentage" v-validate:cho_percentage="{ min: 45, max: 65 }">
+              <p v-if="$validation1.cho_percentage.min || $validation1.cho_percentage.max">Out of range</p>
+            </div>
+            <!--endof: CHO -->
+            <!-- Protein -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.protein_percentage.min || $validation1.protein_percentage.max }">
+              <label>Protein <small>(10% - 35%)</small></label>
+              <input type="number" class="form-control" placeholder="Protein (10% - 35%)" v-model="protein_percentage" v-validate:protein_percentage="{ min: 10, max: 35 }">
+              <p v-if="$validation1.protein_percentage.min || $validation1.protein_percentage.max">Out of range</p>
+            </div>
+            <!--endof: Protein -->
+            <!-- Fat -->
+            <div class="form-group" v-bind:class="{ 'text-danger bg-danger': $validation1.fat_percentage.min || $validation1.fat_percentage.max }">
+              <label>Fat <small>(20% - 35%)</small></label>
+              <input type="number" class="form-control" placeholder="Fat (20% - 35%)" v-model="fat_percentage" v-validate:fat_percentage="{ min: 20, max: 35 }">
+              <p v-if="$validation1.fat_percentage.min || $validation1.fat_percentage.max">Out of range</p>
+            </div>
+            <!--endof: Fat -->
+          </div>
+        </div>
+      </div>
+      <!--endof: Data -->
+
+      <!-- Result -->
+      <div class="col-xs-12 col-sm-8">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3>Result</h3>
+          </div>
+          <div class="panel-body">
+
+            <!-- validation alert: invalid data -->
+            <div class="alert alert-danger" role="alert" v-show="$validation1.invalid || healthy_diet_total !== 100">
+              <strong>Warning!</strong>
+              <br />Couldn't calculate the result.
+              <br />Check `Data` section, find invalid fields, then make them all valid.
+            </div>
+            <!--endof: validation alert: invalid dat -->
+
+            <!-- valid data -->
+            <div v-if="$validation1.valid && healthy_diet_total == 100">
+
+              <!-- BMI & Category -->
+              <div class="table-responsive">
+                <table class="table table-hover table-condensed table-bordered">
+                  <thead>
+                    <tr>
+                      <th>BMI</th>
+                      <th>Category</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ bmi }} kg/m<sup>2</sup></td>
+                      <td>{{ category }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--endof: BMI & Category -->
+
+              <!-- Category Progress bar -->
+              <div class="progress">
+                <div class="progress-bar active" role="progressbar" v-bind:class="[category_bar_class]" v-bind:style="{ width: category_bar_percentage + '%' }">
+                  {{ category }}
+                </div>
+              </div>
+              <!--endof: Category Progress bar -->
+
+              <!-- Kcal & gms -->
+              <div class="table-responsive">
+                <table class="table table-hover table-condensed table-bordered">
+                  <thead>
+                    <tr>
+                      <th>&nbsp;</th>
+                      <th>CHO</th>
+                      <th>Protein</th>
+                      <th>Fat</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Kcal</th>
+                      <td>{{ cho_kcal }}</td>
+                      <td>{{ protein_kcal }}</td>
+                      <td>{{ fat_kcal }}</td>
+                      <th>{{ kcal }}</th>
+                    </tr>
+                    <tr>
+                      <th>gm(s)</th>
+                      <td>{{ cho_gms }}</td>
+                      <td>{{ protein_gms }}</td>
+                      <td>{{ fat_gms }}</td>
+                      <th>{{ ((+cho_gms) + (+protein_gms) + (+fat_gms)).toFixed(2) }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--endof: Kcal & gms -->
+
+              <!-- Servings -->
+              <div class="form-group">
+                <!-- Servings Generator -->
+                <button class="btn btn-primary btn-block" @click="generateServings"><i class="glyphicon glyphicon-flash"></i> Servings Generator</button>
+
+                <!-- Servings Calculator -->
+                <!--<button class="btn btn-primary btn-block" @click="showServingsCalculator"><i class="glyphicon glyphicon-th"></i> Servings Calculator</button>-->
+
+                <!-- Show Out Of Range -->
+                <button class="btn btn-danger btn-block" @click="showOutOfRange" v-show="isDebugMode && servings_calculation_status == 'finished'">Show Out Of Range (for testing only)</button>
+              </div>
+
+              <!-- Servings Calculator Table -->
+              <div v-if="isShowServingsCalculator">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4>
+                      Servings Calculator for: {{ kcal }} kcal
+                      <!-- Servings Calculator -->
+                      <button class="btn btn-primary" @click="useThisServings(item)">Use this</button>
+                      <!--endof: Servings Calculator -->
+                    </h4>
+                  </div>
+
+                  <div class="panel-body">
+                    <div class="table-responsive">
+
+                      <table class="table table-hover table-condensed table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Food Groups</th>
+                            <th>Servings</th>
+                            <th>CHO</th>
+                            <th>Protein</th>
+                            <th>Fat</th>
+                            <th>Kcal</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>Starches</th>
+                            <td>... item.starches }}</td>
+                            <td>... 15 * item.starches }}</td>
+                            <td>... 3 * item.starches }}</td>
+                            <td>... 0 * item.starches }}</td>
+                            <td>... 80 * item.starches }}</td>
+                          </tr>
+                          <tr>
+                            <th>Vegetables</th>
+                            <td><input type="number" min="{{ calc_vegetables_min }}" max="{{ calc_vegetables_max }}" class="form-control"
+                                placeholder="" v-model="calc_vegetables" xxxxv-validate:calc_vegetables="{ required: true, min: calc_vegetables_min }"></td>
+                            <td>... 5 * item.vegetables }}</td>
+                            <td>... 2 * item.vegetables }}</td>
+                            <td>... 0 * item.vegetables }}</td>
+                            <td>... 25 * item.vegetables }}</td>
+                          </tr>
+                          <tr>
+                            <th>Fruits</th>
+                            <td><input type="number" min="{{ calc_fruits_min }}" max="{{ calc_fruits_max }}" class="form-control"
+                                placeholder="" v-model="calc_fruits" xxxxv-validate:calc_fruits="{ required: true, min: calc_fruits_min }"></td>
+                            <td>... 15 * item.fruits }}</td>
+                            <td>... 0 * item.fruits }}</td>
+                            <td>... 0 * item.fruits }}</td>
+                            <td>... 60 * item.fruits }}</td>
+                          </tr>
+                          <tr>
+                            <th>Milk</th>
+                            <td><input type="number" min="{{ calc_milk_min }}" max="{{ calc_milk_max }}" class="form-control"
+                                placeholder="" v-model="calc_milk" xxxxv-validate:calc_milk="{ required: true, min: calc_milk_min }"></td>
+                            <td>... 15 * item.milk }}</td>
+                            <td>... 8 * item.milk }}</td>
+                            <td>... 3 * item.milk }}</td>
+                            <td>... 100 * item.milk }}</td>
+                          </tr>
+                          <tr>
+                            <th>Meat</th>
+                            <td>... item.meat }}</td>
+                            <td>... 0 * item.meat }}</td>
+                            <td>... 7 * item.meat }}</td>
+                            <td>... 3 * item.meat }}</td>
+                            <td>... 45 * item.meat }}</td>
+                          </tr>
+                          <tr>
+                            <th>Legumes</th>
+                            <td><input type="number" min="{{ calc_legumes_min }}" max="{{ calc_legumes_max }}" class="form-control"
+                                placeholder="" v-model="calc_legumes" xxxxv-validate:calc_legumes="{ required: true, min: calc_legumes_min }"></td>
+                            <td>... 15 * item.legumes }}</td>
+                            <td>... 7 * item.legumes }}</td>
+                            <td>... 0 * item.legumes }}</td>
+                            <td>... 100 * item.legumes }}</td>
+                          </tr>
+                          <tr>
+                            <th>Fats</th>
+                            <td>... item.fats }}</td>
+                            <td>... 0 * item.fats }}</td>
+                            <td>... 0 * item.fats }}</td>
+                            <td>... 5 * item.fats }}</td>
+                            <td>... 45 * item.fats }}</td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="2">&nbsp;</th>
+                            <th>... item.calculate_cho_gms }}</th>
+                            <th>... item.calculate_protein_gms }}</th>
+                            <th>... item.calculate_fat_gms }}</th>
+                            <th>... item.calculated_kcal_from_servings }}</th>
+                          </tr>
+                          <tr>
+                            <th colspan="2">&nbsp;</th>
+                            <th>... item.calculate_cho_kcal }}</th>
+                            <th>... item.calculate_protein_kcal }}</th>
+                            <th>... item.calculate_fat_kcal }}</th>
+                            <th rowspan="2">... item.calculated_kcal }}</th>
+                          </tr>
+                          <tr>
+                            <th colspan="2">&nbsp;</th>
+                            <th>... item.calculate_cho_percentage }}%</th>
+                            <th>... item.calculate_protein_percentage }}%</th>
+                            <th>... item.calculate_fat_percentage }}%</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--endof: Servings Calculator Table -->
+
+              <h3 v-if="servings_array.length > 0" class="bg-success" style="margin-top:0; padding: 10px;">
+                Servings<sup> ({{servings_array.length}})</sup>
+                <!-- Filter Button -->
+                <button v-if="servings_array.length > 1" data-toggle="collapse" data-target="#servings_filter" class="btn btn-default pull-right">Filter</button>
+                <!--endof: Filter Button -->
+              </h3>
+
+              <div v-show="servings_calculation_status === 'started'" class="alert alert-info" role="alert">
+                Calculating...
+              </div>
+
+              <!-- servings calculation: fail -->
+              <div class="alert alert-danger" role="alert" v-show="servings_calculation_result === 'fail'">
+                <strong>Warning!</strong>
+                <br />Couldn't calculate servings for current data.
+                <br />Check `Data` section, adjust values, then try again.
+              </div>
+              <!--endof: servings calculation: fail -->
+
+              <!-- Filters -->
+              <div v-if="servings_array.length > 1" class="table-responsive">
+                <div id="servings_filter" class="collapse">
+                  <table class="table table-condensed table-bordered">
+                    <thead>
+                      <th colspan="2">Filters</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Starches</th>
+                        <td><input v-model="starchesFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Vegetables</th>
+                        <td><input v-model="vegetablesFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Fruits</th>
+                        <td><input v-model="fruitsFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Milk</th>
+                        <td><input v-model="milkFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Meat</th>
+                        <td><input v-model="meatFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Legumes</th>
+                        <td><input v-model="legumesFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Fats</th>
+                        <td><input v-model="fatsFilter" type="number" class="form-control"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--endof: Filters -->
+
+
+
+
+              <!-- Servings Tables - Dynamic Tabs -->
+              <div v-if="servings_array.length > 0">
+                <ul class="nav nav-tabs">
+                  <li v-for="item in servings_array
+                    | filterBy starchesFilter in 'starches' 
+                    | filterBy vegetablesFilter in 'vegetables' 
+                    | filterBy fruitsFilter in 'fruits' 
+                    | filterBy milkFilter in 'milk' 
+                    | filterBy meatFilter in 'meat' 
+                    | filterBy legumesFilter in 'legumes' 
+                    | filterBy fatsFilter in 'fats' 
+                    " v-bind:class="{ 'active': $index == 0 }">
+                    <a data-toggle="tab" href="#t_{{ $index + 1 }}">{{ item.calculated_kcal }}</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content">
+                  <div id="t_{{ $index + 1 }}" class="tab-pane fade in" v-bind:class="{ 'active': $index == 0 }" v-for="item in servings_array 
+                    | filterBy starchesFilter in 'starches' 
+                    | filterBy vegetablesFilter in 'vegetables' 
+                    | filterBy fruitsFilter in 'fruits' 
+                    | filterBy milkFilter in 'milk' 
+                    | filterBy meatFilter in 'meat' 
+                    | filterBy legumesFilter in 'legumes' 
+                    | filterBy fatsFilter in 'fats' 
+                    ">
+                    <!-- Servings Table -->
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>
+                          Table {{ $index + 1 }}: {{ item.calculated_kcal }} kcal
+                        </h4>
+                      </div>
+
+                      <div class="panel-body">
+                        <div class="table-responsive">
+
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Food Groups</th>
+                                <th>Servings</th>
+                                <th>CHO</th>
+                                <th>Protein</th>
+                                <th>Fat</th>
+                                <th>Kcal</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th>Starches</th>
+                                <td>{{ item.starches }}</td>
+                                <td>{{ 15 * item.starches }}</td>
+                                <td>{{ 3 * item.starches }}</td>
+                                <td>{{ 0 * item.starches }}</td>
+                                <td>{{ 80 * item.starches }}</td>
+                              </tr>
+                              <tr>
+                                <th>Vegetables</th>
+                                <td>{{ item.vegetables }}</td>
+                                <td>{{ 5 * item.vegetables }}</td>
+                                <td>{{ 2 * item.vegetables }}</td>
+                                <td>{{ 0 * item.vegetables }}</td>
+                                <td>{{ 25 * item.vegetables }}</td>
+                              </tr>
+                              <tr>
+                                <th>Fruits</th>
+                                <td>{{ item.fruits }}</td>
+                                <td>{{ 15 * item.fruits }}</td>
+                                <td>{{ 0 * item.fruits }}</td>
+                                <td>{{ 0 * item.fruits }}</td>
+                                <td>{{ 60 * item.fruits }}</td>
+                              </tr>
+                              <tr>
+                                <th>Milk</th>
+                                <td>{{ item.milk }}</td>
+                                <td>{{ 15 * item.milk }}</td>
+                                <td>{{ 8 * item.milk }}</td>
+                                <td>{{ 3 * item.milk }}</td>
+                                <td>{{ 100 * item.milk }}</td>
+                              </tr>
+                              <tr>
+                                <th>Meat</th>
+                                <td>{{ item.meat }}</td>
+                                <td>{{ 0 * item.meat }}</td>
+                                <td>{{ 7 * item.meat }}</td>
+                                <td>{{ 3 * item.meat }}</td>
+                                <td>{{ 45 * item.meat }}</td>
+                              </tr>
+                              <tr>
+                                <th>Legumes</th>
+                                <td>{{ item.legumes }}</td>
+                                <td>{{ 15 * item.legumes }}</td>
+                                <td>{{ 7 * item.legumes }}</td>
+                                <td>{{ 0 * item.legumes }}</td>
+                                <td>{{ 100 * item.legumes }}</td>
+                              </tr>
+                              <tr>
+                                <th>Fats</th>
+                                <td>{{ item.fats }}</td>
+                                <td>{{ 0 * item.fats }}</td>
+                                <td>{{ 0 * item.fats }}</td>
+                                <td>{{ 5 * item.fats }}</td>
+                                <td>{{ 45 * item.fats }}</td>
+                              </tr>
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                <th colspan="2">gms</th>
+                                <th>{{ item.calculate_cho_gms }}</th>
+                                <th>{{ item.calculate_protein_gms }}</th>
+                                <th>{{ item.calculate_fat_gms }}</th>
+                                <th>{{ item.calculated_kcal_from_servings }}</th>
+                              </tr>
+                              <tr>
+                                <th colspan="2">kcal</th>
+                                <th>{{ item.calculate_cho_kcal }}</th>
+                                <th>{{ item.calculate_protein_kcal }}</th>
+                                <th>{{ item.calculate_fat_kcal }}</th>
+                                <th rowspan="2">{{ item.calculated_kcal }}</th>
+                              </tr>
+                              <tr>
+                                <th colspan="2">%</th>
+                                <th>{{ item.calculate_cho_percentage }}%</th>
+                                <th>{{ item.calculate_protein_percentage }}%</th>
+                                <th>{{ item.calculate_fat_percentage }}%</th>
+                              </tr>
+                            </tfoot>
+                          </table>
+
+                          <!-- Generate Diet Patterns -->
+                          <div>
+                            <button class="btn btn-primary btn-block" @click="generateDietPatterns(item)"><i class="glyphicon glyphicon-flash"></i> Diet Patterns Generator</button>
+                          </div>
+                          <!--endof: Generate Diet Patterns -->
+
+                        </div>
+                      </div>
+                    </div>
+                    <!--endof: Servings Table -->
+                  </div>
+                </div>
+
+              </div>
+              <!--endof: Servings Tables - Dynamic Tabs -->
+
+              <!--<servings-table></servings-table>-->
+
+              <!-- Servings Tables Array -->
+              <!--endof: Servings Tables Array -->
+
+              <!--Show Out Of Range -->
+              <div v-show="isShowOutOfRange">
+
+                <!-- Out Of Range Filters -->
+                <div v-if="out_of_range_servings_array.length > 1" class="table-responsive">
+                  <table class="table table-condensed table-bordered">
+                    <thead>
+                      <th colspan="2">Out of Range Filters</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Starches</th>
+                        <td><input v-model="starchesOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Vegetables</th>
+                        <td><input v-model="vegetablesOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Fruits</th>
+                        <td><input v-model="fruitsOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Milk</th>
+                        <td><input v-model="milkOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Meat</th>
+                        <td><input v-model="meatOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Legumes</th>
+                        <td><input v-model="legumesOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <th>Fats</th>
+                        <td><input v-model="fatsOrFilter" type="number" class="form-control"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!--endof: Out Of Range Filters -->
+
+                <div v-for="item in out_of_range_servings_array
+                  | filterBy starchesOrFilter in 'starches' 
+                  | filterBy vegetablesOrFilter in 'vegetables' 
+                  | filterBy fruitsOrFilter in 'fruits' 
+                  | filterBy milkOrFilter in 'milk' 
+                  | filterBy meatOrFilter in 'meat' 
+                  | filterBy legumesOrFilter in 'legumes' 
+                  | filterBy fatsOrFilter in 'fats' 
+                  ">
+                  <pre class="bg-danger">
+                    {{ item | json }}
+                  </pre>
+                </div>
+              </div>
+              <!--endof: Show Out Of Range -->
+
+
+              <!-- ************************* -->
+              <!-- ***   Diet Patterns   *** -->
+              <!-- ************************* -->
+
+              <!--<h3 v-if="diet_pattern_array.length > 0" class="bg-success" style="margin-top:0; padding: 10px;">Diet Patterns</h3>-->
+              <h3 v-if="dp_starches_array.length > 0" class="bg-success" style="margin-top:0; padding: 10px;">Diet Patterns</h3>
+
+              <!-- Diet Pattern Tables - Dynamic Tabs -->
+              <div v-if="dp_starches_array.length > 0">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#dp_starches_tab_pane">Starches<sup> {{dp_starches_array.length}}</small></a></li>
+                  <li><a data-toggle="tab" href="#dp_vegetables_tab_pane">Vegetables<sup> {{dp_vegetables_array.length}}</sup></a>
+                  </li>
+                  <li><a data-toggle="tab" href="#dp_fruits_tab_pane">Fruits<sup> {{dp_fruits_array.length}}</sup></a></li>
+                  <li><a data-toggle="tab" href="#dp_milk_tab_pane">Milk<sup> {{dp_milk_array.length}}</sup></a></li>
+                  <li><a data-toggle="tab" href="#dp_meat_tab_pane">Meat<sup> {{dp_meat_array.length}}</sup></a></li>
+                  <li><a data-toggle="tab" href="#dp_legumes_tab_pane">Legumes<sup> {{dp_legumes_array.length}}</sup></a></li>
+                  <li><a data-toggle="tab" href="#dp_fats_tab_pane">Fats<sup> {{dp_fats_array.length}}</sup></a></li>
+                  <li><a data-toggle="tab" href="#diet_pattern_tab_pane">Diet Pattern</a></li>
+                </ul>
+
+                <div class="tab-content">
+                  <!-- Starches Diet Pattern Panel -->
+                  <div id="dp_starches_tab_pane" class="tab-pane fade in active">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Starches</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_starches_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('starches', item, 'dp_vegetables_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Starches Diet Pattern Panel -->
+
+                  <!-- Vegetables Diet Pattern Panel -->
+                  <div id="dp_vegetables_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Vegetables</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_vegetables_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('vegetables', item, 'dp_fruits_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Vegetables Diet Pattern Panel -->
+
+                  <!-- Fruits Diet Pattern Panel -->
+                  <div id="dp_fruits_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Fruits</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_fruits_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('fruits', item, 'dp_milk_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Fruits Diet Pattern Panel -->
+
+                  <!-- Milk Diet Pattern Panel -->
+                  <div id="dp_milk_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Milk</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_milk_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('milk', item, 'dp_meat_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Milk Diet Pattern Panel -->
+
+                  <!-- Meat Diet Pattern Panel -->
+                  <div id="dp_meat_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Meat</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_meat_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('meat', item, 'dp_legumes_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Meat Diet Pattern Panel -->
+
+                  <!-- Legumes Diet Pattern Panel -->
+                  <div id="dp_legumes_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Legumes</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_legumes_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('legumes', item, 'dp_fats_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Legumes Diet Pattern Panel -->
+
+                  <!-- Fats Diet Pattern Panel -->
+                  <div id="dp_fats_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Fats</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                                <th v-if="isDebugMode">Status</th>
+                                <th v-if="isDebugMode">Due to</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="item in dp_fats_array">
+                                <td>{{ item.breakfast }}</td>
+                                <td>{{ item.snak1 }}</td>
+                                <td>{{ item.lunch }}</td>
+                                <td>{{ item.snak2 }}</td>
+                                <td>{{ item.dinner }}</td>
+                                <th>{{ item.total }}</th>
+                                <th v-if="isDebugMode">{{ item.status }}</th>
+                                <th v-if="isDebugMode">{{ item.due_to }}</th>
+                                <td><button class="btn btn-default btn-block" @click="setDpFoodGroupAndShowTab('fats', item, 'diet_pattern_tab_pane')">Select</button></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Fats Diet Pattern Panel -->
+
+                  <!-- Diet Pattern Panel -->
+                  <div id="diet_pattern_tab_pane" class="tab-pane fade in">
+                    <div class="panel panel-default" style="margin-top:10px;">
+                      <div class="panel-heading">
+                        <h4>Diet Pattern</h4>
+                      </div>
+                      <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-condensed table-bordered">
+                            <thead>
+                              <tr>
+                                <th>Food Groups</th>
+                                <th>Breakfast</th>
+                                <th>Snak1</th>
+                                <th>Lunch</th>
+                                <th>Snak2</th>
+                                <th>Dinner</th>
+                                <th>Total</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th>Starches</th>
+                                <td>{{ diet_pattern.starches.breakfast }}</td>
+                                <td>{{ diet_pattern.starches.snak1 }}</td>
+                                <td>{{ diet_pattern.starches.lunch }}</td>
+                                <td>{{ diet_pattern.starches.snak2 }}</td>
+                                <td>{{ diet_pattern.starches.dinner }}</td>
+                                <th>{{ diet_pattern.starches.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Vegetables</th>
+                                <td>{{ diet_pattern.vegetables.breakfast }}</td>
+                                <td>{{ diet_pattern.vegetables.snak1 }}</td>
+                                <td>{{ diet_pattern.vegetables.lunch }}</td>
+                                <td>{{ diet_pattern.vegetables.snak2 }}</td>
+                                <td>{{ diet_pattern.vegetables.dinner }}</td>
+                                <th>{{ diet_pattern.vegetables.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Fruits</th>
+                                <td>{{ diet_pattern.fruits.breakfast }}</td>
+                                <td>{{ diet_pattern.fruits.snak1 }}</td>
+                                <td>{{ diet_pattern.fruits.lunch }}</td>
+                                <td>{{ diet_pattern.fruits.snak2 }}</td>
+                                <td>{{ diet_pattern.fruits.dinner }}</td>
+                                <th>{{ diet_pattern.fruits.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Milk</th>
+                                <td>{{ diet_pattern.milk.breakfast }}</td>
+                                <td>{{ diet_pattern.milk.snak1 }}</td>
+                                <td>{{ diet_pattern.milk.lunch }}</td>
+                                <td>{{ diet_pattern.milk.snak2 }}</td>
+                                <td>{{ diet_pattern.milk.dinner }}</td>
+                                <th>{{ diet_pattern.milk.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Meat</th>
+                                <td>{{ diet_pattern.meat.breakfast }}</td>
+                                <td>{{ diet_pattern.meat.snak1 }}</td>
+                                <td>{{ diet_pattern.meat.lunch }}</td>
+                                <td>{{ diet_pattern.meat.snak2 }}</td>
+                                <td>{{ diet_pattern.meat.dinner }}</td>
+                                <th>{{ diet_pattern.meat.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Legumes</th>
+                                <td>{{ diet_pattern.legumes.breakfast }}</td>
+                                <td>{{ diet_pattern.legumes.snak1 }}</td>
+                                <td>{{ diet_pattern.legumes.lunch }}</td>
+                                <td>{{ diet_pattern.legumes.snak2 }}</td>
+                                <td>{{ diet_pattern.legumes.dinner }}</td>
+                                <th>{{ diet_pattern.legumes.total }}</th>
+                              </tr>
+                              <tr>
+                                <th>Fats</th>
+                                <td>{{ diet_pattern.fats.breakfast }}</td>
+                                <td>{{ diet_pattern.fats.snak1 }}</td>
+                                <td>{{ diet_pattern.fats.lunch }}</td>
+                                <td>{{ diet_pattern.fats.snak2 }}</td>
+                                <td>{{ diet_pattern.fats.dinner }}</td>
+                                <th>{{ diet_pattern.fats.total }}</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--endof: Diet Pattern Panel -->
+
+                </div>
+              </div>
+              <!-- Diet Pattern Tables - Dynamic Tabs -->
+
+
+              <!-- ************************ -->
+              <!-- ***   Alternatives   *** -->
+              <!-- ************************ -->
+
+
+              <!-- Generate Alternatives -->
+              <div>
+                <button class="btn btn-primary btn-block" @click="generateAlternatives()"><i class="glyphicon glyphicon-flash"></i> Alternatives</button>
+              </div>
+              <!--endof: Generate Alternatives -->
+
+              <!-- Show Alternatives -->
+              <div> Alt. Starches Array: {{ alt_starches_array.length }}</div>
+              <div dfssfsfs v-for="item in alt_starches_array">
+                <pre>
+                  {{ item | json }}
+                </pre>
+              </div>
+            </div>
+            <!--endof: Show Alternatives -->
+
+
+          </div>
+
+        </div>
+        <!--endof: valid data -->
+      </div>
+  </div>
+
+
+
+
+
+  </div>
+  <!--endof: Result -->
+
+  </validator>
+  </div>
+
+
+  <!--<template id="servings-table-template">
+      <h3>
+        template for servings table
+      </h3>
+  </template>-->
+
+
+
+
+  <!-- JS -->
+  <script src="vue.js"></script>
+  <script src="vue-validator.min.js"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.24/vue.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/vue.validator/2.1.3/vue-validator.min.js"></script>-->
+  <script src="app.js"></script>
+</body>
+
+</html>
